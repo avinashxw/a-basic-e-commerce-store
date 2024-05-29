@@ -10,5 +10,9 @@ touch README.md<br/>mkdir frontend<br/>mkdir backend<br/>cd backend<br/>npm init
 npm install express body-parser<br/>
 touch .gitignore<br/>
 npm install -D jest supertest<br/>
+touch app.js<br/>
+node app.js<br/>
+cd routes<br/>
+touch cart.js admin.js<br/>
+npm install -D http-errors cors<br/>
 
-node index.js
