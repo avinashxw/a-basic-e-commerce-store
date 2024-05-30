@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+var path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const PORT = 3001;
@@ -11,6 +12,10 @@ const indexRouter = require('./routes/index');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 /* define routes */
 app.use('/cart', cartRouter);
