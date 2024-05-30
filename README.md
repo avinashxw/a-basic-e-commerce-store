@@ -26,3 +26,12 @@ npm install axios<br/>
 npm install -D jest<br/>
 npm start<br/>
 
+## app test
+cd backend<br/>
+npm test<br/>
+
+<img src="./images/e-commerce-store.png" title="e-commerce-store" />
+<img src="./images/item-added.png" title="item-added" />
+<img src="./images/order-placed.png" title="order-placed" />
+<img src="./images/cart-is-empty.png" title="cart-is-empty" />
+<img src="./images/app-test.png" title="app-test" />

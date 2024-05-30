@@ -7,32 +7,36 @@ const App = () => {
     const [item, setItem]             = useState({itemid:'',qty:0,price:0});
     const [couponCode, setCouponCode] = useState('');
 
-    const addItem = async() => {
-      try{
-        await axios.post('http://localhost:3001/cart/add/', {
-          userid, item
-        });
-        alert('Success! An item added.');
-      } catch(error) {
-        console.log('The item cannot be added to the cart!', error);
-      }
-    }; 
-
-    const checkout = async() => {
-      try{
-        await axios.post('http://localhost:3001/cart/checkout/', {
-          userid,
-          couponCode
-        });
-        alert('Success! An order placed.');
-      }catch(error) {
-        console.log('The order cannot be placed!', error);
-      }
-    };
-
     const handleInputChange = (event) => {
       setUserid(event.target.value);
     };
+    const handleCouponChange = (event) => {
+      setCouponCode(event.target.value);
+    };
+
+    const addItem = async() => {
+      
+        await axios.post('http://localhost:3001/cart/add/', {
+          userid, item
+        }).then((res) => {
+          console.log(res.data);
+          alert(`${res.data.message}`);
+        })    
+        .catch((err) => {});  
+    }; 
+
+    const checkout = async() => {
+      
+        await axios.post('http://localhost:3001/cart/checkout/', {
+          userid,
+          couponCode
+        }).then((res) => {
+          console.log(res.data.message);
+          alert(`${res.data.message}`);
+        })    
+        .catch((err) => {});  
+    }; 
+
 
     return (
       <>
@@ -47,7 +51,7 @@ const App = () => {
               Add to cart!
             </button>
             <hr/>
-            <input type='text' placeholder='Coupon' value={couponCode} onChange={(e) => setCouponCode} required />
+            <input type='text' placeholder='Coupon' value={couponCode} onChange={handleCouponChange} required />
             <button style={ {backgroundColor: "#0e0e0e", color: "#ffffff", padding: "2px 30px", textAlign: "center", display: "inline-block", fontSize: "16px"} } onClick={checkout}>
               Proceed to checkout!
             </button>

@@ -16,7 +16,6 @@ let coupons    = [];
 router.post('/add', function(req,res,next) {
     
     const { userid, item } = req.body;
-    console.log(req.body);
 
     try{
         let cart = cartItems.find(c=>c.userid === userid);
@@ -37,41 +36,41 @@ router.post('/add', function(req,res,next) {
 router.post('/checkout', function(req,res,next) {
     
     const { userid, couponCode } = req.body;
-    console.log(req.body);
 
     try{
         let cart = cartItems.find(c=>c.userid === userid);
-
+        console.log(cart);
         if(!cart || cart.items.length===0) {
             return res.json({message: 'The cart is empty!'});
             res.end();
         }
+        else {
+            let totalAmount = cart.items.reduce((total,item) => total + item.qty * item.price, 0);
+            let grandTotal = totalAmount;
 
-        let totalAmount = cart.items.reduce((total,item) => total + item.qty * item.price, 0);
-        let grandTotal = totalAmount;
+            if(couponCode && coupons.includes(couponCode)) {
+                grandTotal *=0.9;
+            }
 
-        if(couponCode && coupons.includes(couponCode)) {
-            grandTotal *=0.9;
+            orders =+ 1;
+
+            if(orders % 10 === 0) {
+                const newCouponCode = `COUPON${coupons.length+1}`;
+                coupons.push(newCouponCode);
+            }
+
+            orderItems.push({
+                userid,
+                items: cart.items,
+                totalAmount,
+                couponCode,
+                grandTotal
+            });
+
+            cart = cartItems.filter(c=>c.userid!==userid);
+
+            res.json({message: 'Order placed successfully!', order: orderItems[orderItems.length-1]});
         }
-
-        orders =+ 1;
-
-        if(orders % 10 === 0) {
-            const newCouponCode = `COUPON${coupons.length+1}`;
-            coupons.push(newCouponCode);
-        }
-
-        orderItems.push({
-            userid,
-            items: cart.items,
-            totalAmount,
-            couponCode,
-            grandTotal
-        });
-
-        cart = cart.filter(c=>c.userid!==userid);
-
-        res.json({message: 'Order places successfully!', order: orderItems[orderItems.length-1]});
         
     } catch(error){
         console.log(error)
