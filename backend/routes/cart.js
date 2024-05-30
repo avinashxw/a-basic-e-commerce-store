@@ -33,10 +33,10 @@ router.post('/add', function(req,res,next) {
     }
 });
 
-/* add an item to the cart */
+/* place order */
 router.post('/checkout', function(req,res,next) {
     
-    const { userid, coupon } = req.body;
+    const { userid, couponCode } = req.body;
     console.log(req.body);
 
     try{
@@ -47,6 +47,31 @@ router.post('/checkout', function(req,res,next) {
             res.end();
         }
 
+        let totalAmount = cart.items.reduce((total,item) => total + item.qty * item.price, 0);
+        let grandTotal = totalAmount;
+
+        if(couponCode && coupons.includes(couponCode)) {
+            grandTotal *=0.9;
+        }
+
+        orders =+ 1;
+
+        if(orders % 10 === 0) {
+            const newCouponCode = `COUPON${coupons.length+1}`;
+            coupons.push(newCouponCode);
+        }
+
+        orderItems.push({
+            userid,
+            items: cart.items,
+            totalAmount,
+            couponCode,
+            grandTotal
+        });
+
+        cart = cart.filter(c=>c.userid!==userid);
+
+        res.json({message: 'Order places successfully!', order: orderItems[orderItems.length-1]});
         
     } catch(error){
         console.log(error)
