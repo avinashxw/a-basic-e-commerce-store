@@ -6,6 +6,7 @@ const PORT = 3001;
 
 const cartRouter = require('./routes/cart');
 const adminRouter = require('./routes/admin');
+const indexRouter = require('./routes/index');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use(cors());
 /* define routes */
 app.use('/cart', cartRouter);
 app.use('/admin', adminRouter);
+app.use('/index', indexRouter);
 
 /* 
 ** catch 404 and forward to error handler 

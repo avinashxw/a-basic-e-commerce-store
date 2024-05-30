@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "884ae2fd-1cd2-4ae1-b38e-1410ddf6630a",
+		"name": "e-commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16759365",
+		"_collection_link": "https://red-resonance-958240.postman.co/workspace/My-Workspace~0883037a-814f-4eac-8ed4-91758c730bb1/collection/16759365-884ae2fd-1cd2-4ae1-b38e-1410ddf6630a?action=share&source=collection_link&creator=16759365"
+	},
+	"item": [
+		{
+			"name": "is server running?",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}index",
+					"host": [
+						"{{baseurl}}index"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "http://localhost:3001/",
+			"type": "string"
+		}
+	]
+}
